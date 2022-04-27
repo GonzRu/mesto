@@ -18,12 +18,12 @@ function showPopup() {
     nameInput.value = nameLabel.innerText;
     descriptionInput.value = descriptionLabel.innerText;
 
-    popup.style.display = 'block';
+    popup.classList.toggle('popup_opened');
     body.style.overflow = 'hidden';
 }
 
 function hidePopup() {
-    popup.style.display = 'none';
+    popup.classList.toggle('popup_opened');
     body.style.overflow = 'auto';
 }
 
