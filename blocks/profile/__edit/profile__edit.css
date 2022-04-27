@@ -1,6 +1,6 @@
 .profile__edit {
     background-image: url(../../../images/edit.svg);
-    width: 24px;
+    min-width: 24px;
     height: 24px;
     margin-left: 18px;
     margin-bottom: 7px;
