@@ -23,6 +23,14 @@
 @import url(../blocks/card/__like/card__like.css);
 @import url(../blocks/card/_body/card__body.css);
 
+@import url(../blocks/popup/popup.css);
+@import url(../blocks/popup/__overlay/popup__overlay.css);
+@import url(../blocks/popup/__window/popup__window.css);
+@import url(../blocks/popup/__header/popup__header.css);
+@import url(../blocks/popup/__textbox/popup__textbox.css);
+@import url(../blocks/popup/__close-btn/popup__close-btn.css);
+@import url(../blocks/popup/__save-btn/popup__save-btn.css);
+
 @import url(../blocks/page/page.css);
 @import url(../blocks/page/__header/page__header.css);
 @import url(../blocks/page/__profile/page__profile.css);
