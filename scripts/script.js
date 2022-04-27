@@ -19,12 +19,12 @@ function showPopup() {
     descriptionInput.value = descriptionLabel.innerText;
 
     popup.classList.toggle('popup_opened');
-    body.style.overflow = 'hidden';
+    body.classList.toggle('page_fixed');
 }
 
 function hidePopup() {
     popup.classList.toggle('popup_opened');
-    body.style.overflow = 'auto';
+    body.classList.toggle('page_fixed');
 }
 
 function save() {
