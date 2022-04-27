@@ -7,7 +7,71 @@
     <link rel="stylesheet" href="pages/index.css">
     <title>Mesto</title>
 </head>
-<body>
-    
+<body class="page">
+    <header class="header page__header">
+        <img src="images/logo.svg" alt="Логотип" class="header__logo">
+    </header>
+    <main>
+        <section class="profile page__profile">
+            <div class="profile__info-wrapper">
+                <img src="images/avatar.jpg" alt="Аватар пользователя" class="profile__avatar">
+                <div class="profile__info">
+                    <div class="profile__name-wrapper">
+                        <h1 class="profile__name">Жак-Ив Кусто</h1>
+                        <button class="profile__edit btn-icon"></button>
+                    </div>
+                    <p class="profile__description">Исследователь океана</p>
+                </div>
+            </div>
+            <button class="profile__add-photo btn-icon"></button>
+        </section>
+        <section class="cards page__cards">
+            <div class="card">
+                <img src="images/cards/el1.jpg" alt="Карачаевск" class="card__image">
+                <div class="card__body">
+                    <h2 class="card__caption">Карачаевск</h2>
+                    <button class="card__like btn-icon"></button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/cards/el2.jpg" alt="Гора Эльбрус" class="card__image">
+                <div class="card__body">
+                    <h2 class="card__caption">Гора Эльбрус</h2>
+                    <button class="card__like btn-icon"></button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/cards/el3.jpg" alt="Домбай" class="card__image">
+                <div class="card__body">
+                    <h2 class="card__caption">Домбай</h2>
+                    <button class="card__like btn-icon" ></button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/cards/el4.jpg" alt="Гора Эльбрус" class="card__image">
+                <div class="card__body">
+                    <h2 class="card__caption">Гора Эльбрус</h2>
+                    <button class="card__like btn-icon" ></button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/cards/el5.jpg" alt="Домбай" class="card__image">
+                <div class="card__body">
+                    <h2 class="card__caption">Домбай</h2>
+                    <button class="card__like btn-icon" ></button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="images/cards/el6.jpg" alt="Карачаево-Черкесия" class="card__image">
+                <div class="card__body">
+                    <h2 class="card__caption">Карачаево-Черкесия</h2>
+                    <button class="card__like btn-icon" ></button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer page__footer">
+        <img src="images/footer-logo.png" alt="Логотип" class="footer__logo">
+    </footer>
 </body>
 </html>

@@ -1,0 +1,14 @@
+.btn-icon {
+    border: none;
+    background: none;
+    outline: none;
+    margin: 0;
+    padding: 0;
+    -moz-transition: opacity 0.3 linear;
+    transition: opacity 0.3 linear;
+}
+
+.btn-icon:hover {
+    cursor: pointer;
+    opacity: .6;
+}
