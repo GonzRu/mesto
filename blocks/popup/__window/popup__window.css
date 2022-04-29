@@ -1,7 +1,4 @@
 .popup__window {
-    position: fixed;
-    top: calc(50vh - 165px);
-    left: calc(50vw - 215px);
     width: 430px;
     height: 330px;
     border-radius: 10px;
@@ -10,11 +7,11 @@
     flex-direction: column;
     box-sizing: border-box;
     padding: 34px 36px 37px 36px;
+    margin: auto
 }
 
 @media screen and (max-width: 425px) {
     .popup__window {
-        left: 19px;
         width: calc(100% - 38px);
         height: 322px;
         padding: 25px 22px;

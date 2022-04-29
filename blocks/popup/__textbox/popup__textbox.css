@@ -1,8 +1,11 @@
 .popup__textbox {
     outline: none;
     border: none;
-    border-bottom: 1px solid #000000;
+    border-bottom: 1px solid rgba(0, 0, 0, .2);
     padding: 0;
     margin: 0;
     margin-top: 30px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
 }
