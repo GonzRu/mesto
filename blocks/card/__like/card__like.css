@@ -4,3 +4,7 @@
     min-width: 22px;
     height: 19px;
 }
+
+.card__like:hover {
+    opacity: .6;
+}
