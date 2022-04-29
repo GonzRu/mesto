@@ -18,13 +18,13 @@ function showPopup() {
     nameInput.value = nameLabel.textContent;
     descriptionInput.value = descriptionLabel.textContent;
 
-    popup.classList.toggle('popup_opened');
-    body.classList.toggle('page_fixed');
+    popup.classList.add('popup_opened');
+    body.classList.add('page_fixed');
 }
 
 function hidePopup() {
-    popup.classList.toggle('popup_opened');
-    body.classList.toggle('page_fixed');
+    popup.classList.remove('popup_opened');
+    body.classList.remove('page_fixed');
 }
 
 function save() {
