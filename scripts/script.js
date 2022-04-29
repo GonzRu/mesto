@@ -15,8 +15,8 @@ closeBtn.addEventListener('click', hidePopup);
 saveBtn.addEventListener('click', save);
 
 function showPopup() {
-    nameInput.value = nameLabel.innerText;
-    descriptionInput.value = descriptionLabel.innerText;
+    nameInput.value = nameLabel.textContent;
+    descriptionInput.value = descriptionLabel.textContent;
 
     popup.classList.toggle('popup_opened');
     body.classList.toggle('page_fixed');
@@ -28,8 +28,8 @@ function hidePopup() {
 }
 
 function save() {
-    nameLabel.innerText = nameInput.value;
-    descriptionLabel.innerText = descriptionInput.value;
+    nameLabel.textContent = nameInput.value;
+    descriptionLabel.textContent = descriptionInput.value;
 
     hidePopup();
 }
