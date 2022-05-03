@@ -1,3 +1,18 @@
 .page__profile {
+    margin: auto;
     margin-top: 40px;
+    width: 100%;
+    max-width: 880px;
+}
+
+@media screen and (max-width: 1279px) {
+    .page__profile {
+        max-width: calc(62% + 83px);
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .page__profile {
+        max-width: calc(100% - 38px);
+    }
 }

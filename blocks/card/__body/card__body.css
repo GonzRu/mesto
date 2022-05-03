@@ -3,5 +3,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: white;
-    padding: 25px 21px 31px 15px;
+    height: 79px;
+    box-sizing: border-box;
+    padding: 25px 18px 31px 21px;
 }

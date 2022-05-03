@@ -5,14 +5,18 @@
     background-image: url(../../../images/add.svg);
     background-repeat: no-repeat;
     background-position: center;
+    background-size: 22px 22px;
     border: 2px solid #FFFFFF;
     box-sizing: border-box;
     border-radius: 2px;
+    margin-left: 10px;
 }
 
 @media screen and (max-width: 600px) {
     .profile__add-photo {
         width: 100%;
-        margin-top: 36px;
+        margin-top: 32px;
+        margin-left: 0;
+        background-size: 16px 16px;
     }
 }
