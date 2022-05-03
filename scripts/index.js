@@ -2,7 +2,7 @@ const popup = document.querySelector('.popup');
 const body = document.querySelector('body');
 const editBtn = document.querySelector('.profile__edit');
 const closeBtn = document.querySelector('.popup__close-btn');
-const saveBtn = document.querySelector('.popup__save-btn');
+const saveBtn = document.querySelector('.form__save-btn');
 
 const nameInput = document.querySelector('#name');
 const descriptionInput = document.querySelector('#description');
