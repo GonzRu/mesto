@@ -2,7 +2,7 @@ const popup = document.querySelector('.popup');
 const body = document.querySelector('body');
 const editBtn = document.querySelector('.profile__edit');
 const closeBtn = document.querySelector('.popup__close-btn');
-const saveBtn = document.querySelector('.form__save-btn');
+const form = document.querySelector('.form');
 
 const nameInput = document.querySelector('#name');
 const descriptionInput = document.querySelector('#description');
@@ -12,7 +12,7 @@ const descriptionLabel = document.querySelector('.profile__description');
 
 editBtn.addEventListener('click', showPopup);
 closeBtn.addEventListener('click', hidePopup);
-saveBtn.addEventListener('click', save);
+form.addEventListener('submit', save);
 
 function showPopup() {
     nameInput.value = nameLabel.textContent;
@@ -27,7 +27,9 @@ function hidePopup() {
     body.classList.remove('page_fixed');
 }
 
-function save() {
+function save(e) {
+    e.preventDefault();
+    
     nameLabel.textContent = nameInput.value;
     descriptionLabel.textContent = descriptionInput.value;
 
