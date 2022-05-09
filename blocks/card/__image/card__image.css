@@ -1,3 +1,5 @@
 .card__image {
     object-fit: fill;
+    min-height: 282px;
+    max-height: 282px;
 }
