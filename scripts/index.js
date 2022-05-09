@@ -52,6 +52,9 @@ function addCard(card) {
     cardElement.querySelector('.card__image').alt = card.name;
     cardElement.querySelector('.card__caption').textContent = card.name;
 
+    const trashElement = cardElement.querySelector('.card__trash');
+    trashElement.addEventListener('click', evt => evt.target.parentElement.remove());
+
     cardsList.append(cardElement);
 }
 
