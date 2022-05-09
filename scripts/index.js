@@ -27,18 +27,23 @@ const initialCards = [
 
 const popup = document.querySelector('.popup');
 const body = document.querySelector('body');
-const editBtn = document.querySelector('.profile__edit');
-const closeBtn = document.querySelector('.popup__close-btn');
 
-const nameLabel = document.querySelector('.profile__name');
-const descriptionLabel = document.querySelector('.profile__description');
+const profileNameElement = document.querySelector('.profile__name');
+const profileDescriptionElement = document.querySelector('.profile__description');
 const addCardButtonElement = document.querySelector('.profile__add-photo');
 
-editBtn.addEventListener('click', showEditProfilePopup);
-closeBtn.addEventListener('click', hidePopup);
-addCardButtonElement.addEventListener('click', showAddCardPopup);
+initSubscriptions();
 
 initialCards.forEach(addCard);
+
+function initSubscriptions() {
+    const editProfileButtonElement = document.querySelector('.profile__edit');
+    const closePopupButtonElement = document.querySelector('.popup__close-btn');
+
+    editProfileButtonElement.addEventListener('click', showEditProfilePopup);
+    closePopupButtonElement.addEventListener('click', hidePopup);
+    addCardButtonElement.addEventListener('click', showAddCardPopup);
+}
 
 function addCard(card) {
     const cardsList = document.querySelector('.cards__list');
@@ -65,8 +70,8 @@ function showEditProfilePopup() {
     const editProfileFormTemplate = document.querySelector('#edit-profile').content;
     const editProfileElement = editProfileFormTemplate.querySelector('.form').cloneNode(true);
 
-    editProfileElement.querySelector('#name').value = nameLabel.textContent;
-    editProfileElement.querySelector('#description').value = descriptionLabel.textContent;
+    editProfileElement.querySelector('#name').value = profileNameElement.textContent;
+    editProfileElement.querySelector('#description').value = profileDescriptionElement.textContent;
     editProfileElement.addEventListener('submit', saveEditProfile);
 
     showPopup(editProfileElement);
@@ -109,8 +114,8 @@ function hidePopup() {
 function saveEditProfile(e) {
     e.preventDefault();
     
-    nameLabel.textContent = e.target.querySelector('#name').value;
-    descriptionLabel.textContent = e.target.querySelector('#description').value;
+    profileNameElement.textContent = e.target.querySelector('#name').value;
+    profileDescriptionElement.textContent = e.target.querySelector('#description').value;
 
     hidePopup();
 }
