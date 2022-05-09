@@ -70,8 +70,8 @@ function showEditProfilePopup() {
     const editProfileFormTemplate = document.querySelector('#edit-profile').content;
     const editProfileElement = editProfileFormTemplate.querySelector('.form').cloneNode(true);
 
-    editProfileElement.querySelector('#name').value = profileNameElement.textContent;
-    editProfileElement.querySelector('#description').value = profileDescriptionElement.textContent;
+    editProfileElement.querySelector('#edit-profile-form-name').value = profileNameElement.textContent;
+    editProfileElement.querySelector('#edit-profile-form-description').value = profileDescriptionElement.textContent;
     editProfileElement.addEventListener('submit', saveEditProfile);
 
     showPopup(editProfileElement);
@@ -114,8 +114,8 @@ function hidePopup() {
 function saveEditProfile(e) {
     e.preventDefault();
     
-    profileNameElement.textContent = e.target.querySelector('#name').value;
-    profileDescriptionElement.textContent = e.target.querySelector('#description').value;
+    profileNameElement.textContent = e.target.querySelector('#edit-profile-form-name').value;
+    profileDescriptionElement.textContent = e.target.querySelector('#edit-profile-form-description').value;
 
     hidePopup();
 }
@@ -123,8 +123,8 @@ function saveEditProfile(e) {
 function addCardSubmit(e) {
     e.preventDefault();
     
-    const name = e.target.querySelector('#name').value;
-    const link = e.target.querySelector('#link').value;
+    const name = e.target.querySelector('#add-card-form-name').value;
+    const link = e.target.querySelector('#add-card-form-link').value;
 
     const card = {
         name: name,
