@@ -55,6 +55,9 @@ function addCard(card) {
     const trashElement = cardElement.querySelector('.card__trash');
     trashElement.addEventListener('click', evt => evt.target.parentElement.remove());
 
+    const likeElement = cardElement.querySelector('.card__like');
+    likeElement.addEventListener('click', evt => evt.target.classList.toggle('card__like_active'));
+
     cardsList.append(cardElement);
 }
 
