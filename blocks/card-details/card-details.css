@@ -1,4 +1,5 @@
 .card-details {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
