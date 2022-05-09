@@ -2,4 +2,5 @@
     object-fit: fill;
     min-height: 282px;
     max-height: 282px;
+    cursor: pointer;
 }

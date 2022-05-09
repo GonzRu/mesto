@@ -53,6 +53,9 @@ function addCard(card) {
     const likeElement = cardElement.querySelector('.card__like');
     likeElement.addEventListener('click', evt => evt.target.classList.toggle('card__like_active'));
 
+    const imageElement = cardElement.querySelector('.card__image');
+    imageElement.addEventListener('click', e => showCardDetailsPopup(card));
+
     cardsList.append(cardElement);
 }
 
@@ -65,6 +68,17 @@ function showEditProfilePopup() {
     editProfileElement.addEventListener('submit', saveEditProfile);
 
     showPopup(editProfileElement);
+}
+
+function showCardDetailsPopup(card) {
+    const cardDetailsTemplate = document.querySelector('#card-details').content;
+    const cardDetailsElement = cardDetailsTemplate.querySelector('.card-details').cloneNode(true);
+
+    cardDetailsElement.querySelector(".card-details__image").src = card.link;
+    cardDetailsElement.querySelector(".card-details__image").alt = card.name;
+    cardDetailsElement.querySelector(".card-details__description").textContent = card.name;
+
+    showPopup(cardDetailsElement);
 }
 
 function showPopup(popupContent) {
