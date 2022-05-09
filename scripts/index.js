@@ -27,24 +27,19 @@ const initialCards = [
 
 const popup = document.querySelector('.popup');
 const body = document.querySelector('body');
-const cardsList = document.querySelector('.cards__list');
 const editBtn = document.querySelector('.profile__edit');
 const closeBtn = document.querySelector('.popup__close-btn');
-const form = document.querySelector('.form');
-
-const nameInput = document.querySelector('#name');
-const descriptionInput = document.querySelector('#description');
 
 const nameLabel = document.querySelector('.profile__name');
 const descriptionLabel = document.querySelector('.profile__description');
 
-editBtn.addEventListener('click', showPopup);
+editBtn.addEventListener('click', showEditProfilePopup);
 closeBtn.addEventListener('click', hidePopup);
-form.addEventListener('submit', save);
 
 initialCards.forEach(addCard);
 
 function addCard(card) {
+    const cardsList = document.querySelector('.cards__list');
     const cardTemplate = document.querySelector('#card-template').content;
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
@@ -61,9 +56,21 @@ function addCard(card) {
     cardsList.append(cardElement);
 }
 
-function showPopup() {
-    nameInput.value = nameLabel.textContent;
-    descriptionInput.value = descriptionLabel.textContent;
+function showEditProfilePopup() {
+    const editProfileFormTemplate = document.querySelector('#edit-profile').content;
+    const editProfileElement = editProfileFormTemplate.querySelector('.form').cloneNode(true);
+
+    editProfileElement.querySelector('#name').value = nameLabel.textContent;
+    editProfileElement.querySelector('#description').value = descriptionLabel.textContent;
+    editProfileElement.addEventListener('submit', saveEditProfile);
+
+    showPopup(editProfileElement);
+}
+
+function showPopup(popupContent) {
+    const popupContentElement = document.querySelector('#popup__content');
+    popupContentElement.innerHTML = '';
+    popupContentElement.append(popupContent);
 
     popup.classList.add('popup_opened');
     body.classList.add('page_fixed');
@@ -74,11 +81,11 @@ function hidePopup() {
     body.classList.remove('page_fixed');
 }
 
-function save(e) {
+function saveEditProfile(e) {
     e.preventDefault();
     
-    nameLabel.textContent = nameInput.value;
-    descriptionLabel.textContent = descriptionInput.value;
+    nameLabel.textContent = e.target.querySelector('#name').value;
+    descriptionLabel.textContent = e.target.querySelector('#description').value;
 
     hidePopup();
 }
