@@ -31,34 +31,37 @@
     <footer class="footer page__footer">
         <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup" id="popup-profile">
         <div class="popup__container">
             <button type="button" class="popup__close-btn btn-icon"></button>
-            <div id="popup__content"></div>
+            <form class="form" name="edit-profile-form">
+                <h2 class="form__header">Редактировать профиль</h2>
+                <input type="text" class="form__textbox" name="name" id="edit-profile-form-name">
+                <input type="text" class="form__textbox" name="description" id="edit-profile-form-description">
+                <button type="submit" class="form__save-btn">Сохранить</button>
+            </form>
         </div>
     </div>
-    <template id="edit-profile">
-        <form class="form" name="edit-profile-form">
-            <h2 class="form__header">Редактировать профиль</h2>
-            <input type="text" class="form__textbox" name="name" id="edit-profile-form-name">
-            <input type="text" class="form__textbox" name="description" id="edit-profile-form-description">
-            <button type="submit" class="form__save-btn">Сохранить</button>
-        </form>
-    </template>
-    <template id="add-card">
-        <form class="form" name="add-card-form">
-            <h2 class="form__header">Редактировать профиль</h2>
-            <input type="text" class="form__textbox" name="name" id="add-card-form-name" placeholder="Название">
-            <input type="text" class="form__textbox" name="link" id="add-card-form-link" placeholder="Ссылка на картинку">
-            <button type="submit" class="form__save-btn">Создать</button>
-        </form>
-    </template>
-    <template id="card-details">
-        <div class="card-details">
-            <img src="#" alt="#" class="card-details__image">
-            <p class="card-details__description"></p>
+    <div class="popup" id="popup-card-add">
+        <div class="popup__container">
+            <button type="button" class="popup__close-btn btn-icon"></button>
+            <form class="form" name="add-card-form">
+                <h2 class="form__header">Новое место</h2>
+                <input type="text" class="form__textbox" name="name" id="add-card-form-name" placeholder="Название">
+                <input type="text" class="form__textbox" name="link" id="add-card-form-link" placeholder="Ссылка на картинку">
+                <button type="submit" class="form__save-btn">Создать</button>
+            </form>
         </div>
-    </template>
+    </div>
+    <div class="popup" id="popup-card-details">
+        <div class="popup__container">
+            <button type="button" class="popup__close-btn btn-icon"></button>
+            <div class="card-details">
+                <img src="#" alt="#" class="card-details__image">
+                <p class="card-details__description"></p>
+            </div>
+        </div>
+    </div>
     <template id="card-template">
         <li class="card">
             <div class="card__trash btn-icon"></div>

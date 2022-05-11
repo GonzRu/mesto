@@ -25,25 +25,50 @@ const initialCards = [
     }
   ];
 
-const popup = document.querySelector('.popup');
 const body = document.querySelector('body');
 
+// Profile
 const profileNameElement = document.querySelector('.profile__name');
 const profileDescriptionElement = document.querySelector('.profile__description');
 const profileButtonElement = document.querySelector('.profile__edit');
-const popupCloseButtonElement = document.querySelector('.popup__close-btn');
+
+// Cards
 const cardsListElement = document.querySelector('.cards__list');
 const cardAddButtonElement = document.querySelector('.profile__add-photo');
 const cardTemplate = document.querySelector('#card-template').content;
+
+// Popup: Edit Profile
+const profilePopup = document.querySelector('#popup-profile');
+const profilePopupNameElement = profilePopup.querySelector('#edit-profile-form-name');
+const profilePopupDescriptionElement = profilePopup.querySelector('#edit-profile-form-description');
+const profilePopupCloseBtnElement = profilePopup.querySelector('.popup__close-btn');
+const profilePopupFormElement = profilePopup.querySelector('.form');
+
+// Popup: Add Card
+const cardPopup = document.querySelector('#popup-card-add');
+const cardPopupNameElement = cardPopup.querySelector('#add-card-form-name');
+const cardPopupLinkElement = cardPopup.querySelector('#add-card-form-link');
+const cardPopupCloseBtnElement = cardPopup.querySelector('.popup__close-btn');
+const cardPopupSubmitBtnElement = cardPopup.querySelector('.form');
+
+// Popup: Card Details
+const cardDetailsPopup = document.querySelector('#popup-card-details');
+const cardDetailsPopupCloseBtnElement = cardDetailsPopup.querySelector('.popup__close-btn');
 
 initSubscriptions();
 
 initialCards.forEach(renderCard);
 
 function initSubscriptions() {
-    profileButtonElement.addEventListener('click', showEditProfilePopup);
-    popupCloseButtonElement.addEventListener('click', hidePopup);
-    cardAddButtonElement.addEventListener('click', showAddCardPopup);
+    profileButtonElement.addEventListener('click', openEditProfilePopup);
+    cardAddButtonElement.addEventListener('click', openAddCardPopup);
+
+    profilePopupFormElement.addEventListener('submit', submitEditProfile);
+    cardPopupSubmitBtnElement.addEventListener('submit', submitAddCard);
+
+    profilePopupCloseBtnElement.addEventListener('click', e => closePopup(profilePopup));
+    cardPopupCloseBtnElement.addEventListener('click', e => closePopup(cardPopup));
+    cardDetailsPopupCloseBtnElement.addEventListener('click', e => closePopup(cardDetailsPopup));
 }
 
 function renderCard(card) {
@@ -58,7 +83,7 @@ function createCardElement(card) {
     const cardImageElement = cardElement.querySelector('.card__image');
     cardImageElement.src = card.link;
     cardImageElement.alt = card.name;
-    cardImageElement.addEventListener('click', e => showCardDetailsPopup(card));
+    cardImageElement.addEventListener('click', e => openCardDetailsPopup(card));
     
     const cardCaptionElement = cardElement.querySelector('.card__caption');
     cardCaptionElement.textContent = card.name;
@@ -72,65 +97,42 @@ function createCardElement(card) {
     return cardElement;
 }
 
-function showEditProfilePopup() {
-    const editProfileFormTemplate = document.querySelector('#edit-profile').content;
-    const editProfileElement = editProfileFormTemplate.querySelector('.form').cloneNode(true);
+function openEditProfilePopup() {
+    profilePopupNameElement.value = profileNameElement.textContent;
+    profilePopupDescriptionElement.value = profileDescriptionElement.textContent;
 
-    editProfileElement.querySelector('#edit-profile-form-name').value = profileNameElement.textContent;
-    editProfileElement.querySelector('#edit-profile-form-description').value = profileDescriptionElement.textContent;
-    editProfileElement.addEventListener('submit', saveEditProfile);
-
-    showPopup(editProfileElement);
+    openPopup(profilePopup);
 }
 
-function showCardDetailsPopup(card) {
-    const cardDetailsTemplate = document.querySelector('#card-details').content;
-    const cardDetailsElement = cardDetailsTemplate.querySelector('.card-details').cloneNode(true);
+function openCardDetailsPopup(card) {
+    cardDetailsPopup.querySelector(".card-details__image").src = card.link;
+    cardDetailsPopup.querySelector(".card-details__image").alt = card.name;
+    cardDetailsPopup.querySelector(".card-details__description").textContent = card.name;
 
-    cardDetailsElement.querySelector(".card-details__image").src = card.link;
-    cardDetailsElement.querySelector(".card-details__image").alt = card.name;
-    cardDetailsElement.querySelector(".card-details__description").textContent = card.name;
-
-    showPopup(cardDetailsElement);
+    openPopup(cardDetailsPopup);
 }
 
-function showAddCardPopup() {
-    const addCardTemplate = document.querySelector('#add-card').content;
-    const addCardElement = addCardTemplate.querySelector('.form').cloneNode(true);
+function openAddCardPopup() {
+    cardPopupNameElement.value = '';
+    cardPopupLinkElement.value = '';
 
-    addCardElement.addEventListener('submit', addCardSubmit);
-
-    showPopup(addCardElement);
+    openPopup(cardPopup);
 }
 
-function showPopup(popupContent) {
-    const popupContentElement = document.querySelector('#popup__content');
-    popupContentElement.innerHTML = '';
-    popupContentElement.append(popupContent);
-
-    popup.classList.add('popup_opened');
-    body.classList.add('page_fixed');
-}
-
-function hidePopup() {
-    popup.classList.remove('popup_opened');
-    body.classList.remove('page_fixed');
-}
-
-function saveEditProfile(e) {
+function submitEditProfile(e) {
     e.preventDefault();
     
     profileNameElement.textContent = e.target.querySelector('#edit-profile-form-name').value;
     profileDescriptionElement.textContent = e.target.querySelector('#edit-profile-form-description').value;
 
-    hidePopup();
+    closePopup(profilePopup);
 }
 
-function addCardSubmit(e) {
+function submitAddCard(e) {
     e.preventDefault();
     
-    const name = e.target.querySelector('#add-card-form-name').value;
-    const link = e.target.querySelector('#add-card-form-link').value;
+    const name = cardPopupNameElement.value;
+    const link = cardPopupLinkElement.value;
 
     const card = {
         name: name,
@@ -139,5 +141,15 @@ function addCardSubmit(e) {
 
     renderCard(card)
 
-    hidePopup();
+    closePopup(cardPopup);
+}
+
+function openPopup(popupElement) {
+    popupElement.classList.add('popup_opened');
+    body.classList.add('page_fixed');
+}
+
+function closePopup(popupElement) {
+    popupElement.classList.remove('popup_opened');
+    body.classList.remove('page_fixed');
 }
