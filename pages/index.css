@@ -38,6 +38,7 @@
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__close-btn/popup__close-btn.css);
+@import url(../blocks/popup/_type/popup_type_card-details.css);
 
 @import url(../blocks/card-details/card-details.css);
 @import url(../blocks/card-details/__description/card-details__description.css);

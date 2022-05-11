@@ -38,21 +38,21 @@ const cardAddButtonElement = document.querySelector('.profile__add-photo');
 const cardTemplate = document.querySelector('#card-template').content;
 
 // Popup: Edit Profile
-const profilePopup = document.querySelector('#popup-profile');
+const profilePopup = document.querySelector('.popup_type_profile');
 const profilePopupNameElement = profilePopup.querySelector('#edit-profile-form-name');
 const profilePopupDescriptionElement = profilePopup.querySelector('#edit-profile-form-description');
 const profilePopupCloseBtnElement = profilePopup.querySelector('.popup__close-btn');
 const profilePopupFormElement = profilePopup.querySelector('.form');
 
 // Popup: Add Card
-const cardPopup = document.querySelector('#popup-card-add');
+const cardPopup = document.querySelector('.popup_type_card');
 const cardPopupNameElement = cardPopup.querySelector('#add-card-form-name');
 const cardPopupLinkElement = cardPopup.querySelector('#add-card-form-link');
 const cardPopupCloseBtnElement = cardPopup.querySelector('.popup__close-btn');
 const cardPopupSubmitBtnElement = cardPopup.querySelector('.form');
 
 // Popup: Card Details
-const cardDetailsPopup = document.querySelector('#popup-card-details');
+const cardDetailsPopup = document.querySelector('.popup_type_card-details');
 const cardDetailsPopupCloseBtnElement = cardDetailsPopup.querySelector('.popup__close-btn');
 
 initSubscriptions();
