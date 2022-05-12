@@ -54,6 +54,8 @@ const cardPopupSubmitBtnElement = cardPopup.querySelector('.form');
 // Popup: Card Details
 const cardDetailsPopup = document.querySelector('.popup_type_card-details');
 const cardDetailsPopupCloseBtnElement = cardDetailsPopup.querySelector('.popup__close-btn');
+const cardDetailsPopupImageElement = cardDetailsPopup.querySelector('.card-details__image');
+const cardDetailsPopupDescriptionElement = cardDetailsPopup.querySelector('.card-details__description');
 
 initSubscriptions();
 
@@ -105,16 +107,15 @@ function openEditProfilePopup() {
 }
 
 function openCardDetailsPopup(card) {
-    cardDetailsPopup.querySelector(".card-details__image").src = card.link;
-    cardDetailsPopup.querySelector(".card-details__image").alt = card.name;
-    cardDetailsPopup.querySelector(".card-details__description").textContent = card.name;
+    cardDetailsPopupImageElement.src = card.link;
+    cardDetailsPopupImageElement.alt = card.name;
+    cardDetailsPopupDescriptionElement.textContent = card.name;
 
     openPopup(cardDetailsPopup);
 }
 
 function openAddCardPopup() {
-    cardPopupNameElement.value = '';
-    cardPopupLinkElement.value = '';
+    cardPopupSubmitBtnElement.reset();
 
     openPopup(cardPopup);
 }
@@ -122,8 +123,8 @@ function openAddCardPopup() {
 function submitEditProfile(e) {
     e.preventDefault();
     
-    profileNameElement.textContent = e.target.querySelector('#edit-profile-form-name').value;
-    profileDescriptionElement.textContent = e.target.querySelector('#edit-profile-form-description').value;
+    profileNameElement.textContent = profilePopupNameElement.value;
+    profileDescriptionElement.textContent = profilePopupDescriptionElement.value;
 
     closePopup(profilePopup);
 }
