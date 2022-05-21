@@ -71,6 +71,17 @@ function initSubscriptions() {
     profilePopupCloseBtnElement.addEventListener('click', e => closePopup(profilePopup));
     cardPopupCloseBtnElement.addEventListener('click', e => closePopup(cardPopup));
     cardDetailsPopupCloseBtnElement.addEventListener('click', e => closePopup(cardDetailsPopup));
+
+    const initPopupSubscrptions = (popupElement) => {
+      popupElement.addEventListener('mousedown', (e) => {
+        if (e.target.classList.contains('popup')) {
+          closePopup(popupElement)
+        }
+      });
+    };
+    initPopupSubscrptions(profilePopup);
+    initPopupSubscrptions(cardPopup);
+    initPopupSubscrptions(cardDetailsPopup);
 }
 
 function renderCard(card) {
