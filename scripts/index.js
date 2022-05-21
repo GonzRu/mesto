@@ -145,12 +145,23 @@ function submitAddCard(e) {
     closePopup(cardPopup);
 }
 
+const keyDownHandler = (e) => {
+  if (e.key === 'Escape' && keyDownHandler.owner) {
+    closePopup(keyDownHandler.owner);
+  }
+}
+
 function openPopup(popupElement) {
     popupElement.classList.add('popup_opened');
     body.classList.add('page_fixed');
+
+    keyDownHandler.owner = popupElement;
+    document.addEventListener('keydown', keyDownHandler);
 }
 
 function closePopup(popupElement) {
     popupElement.classList.remove('popup_opened');
     body.classList.remove('page_fixed');
+
+    document.removeEventListener('keydown', keyDownHandler);
 }
