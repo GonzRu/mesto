@@ -26,11 +26,21 @@ const showInputError = (formElement, inputElement, errorMessage, settings) => {
     });
   };
 
+  const disableButton = (buttonElement, settings) => {
+    buttonElement.classList.add(settings.inactiveButtonClass);
+    buttonElement.disabled = true;
+  }
+
+  const enableButton = (buttonElement, settings) => {
+    buttonElement.classList.remove(settings.inactiveButtonClass);
+    buttonElement.disabled = false;
+  }
+
   const toggleButtonState = (inputList, buttonElement, settings) => {
     if (hasInvalidInput(inputList)) {
-      buttonElement.classList.add(settings.inactiveButtonClass);
+      disableButton(buttonElement, settings);
     } else {
-      buttonElement.classList.remove(settings.inactiveButtonClass);
+      enableButton(buttonElement, settings);
     }
   };
 
@@ -44,6 +54,7 @@ const showInputError = (formElement, inputElement, errorMessage, settings) => {
               toggleButtonState(inputList, buttonElement, settings);
           });
     });
+    formElement.addEventListener('reset', _ => disableButton(buttonElement, settings));
   };
 
   const enableValidation = (settings) => {

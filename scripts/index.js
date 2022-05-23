@@ -49,7 +49,7 @@ const cardPopup = document.querySelector('.popup_type_card');
 const cardPopupNameElement = cardPopup.querySelector('#add-card-form-name');
 const cardPopupLinkElement = cardPopup.querySelector('#add-card-form-link');
 const cardPopupCloseBtnElement = cardPopup.querySelector('.popup__close-btn');
-const cardPopupSubmitBtnElement = cardPopup.querySelector('.form');
+const cardPopupFormElement = cardPopup.querySelector('.form');
 
 // Popup: Card Details
 const cardDetailsPopup = document.querySelector('.popup_type_card-details');
@@ -66,7 +66,7 @@ function initSubscriptions() {
     cardAddButtonElement.addEventListener('click', openAddCardPopup);
 
     profilePopupFormElement.addEventListener('submit', submitEditProfile);
-    cardPopupSubmitBtnElement.addEventListener('submit', submitAddCard);
+    cardPopupFormElement.addEventListener('submit', submitAddCard);
 
     profilePopupCloseBtnElement.addEventListener('click', e => closePopup(profilePopup));
     cardPopupCloseBtnElement.addEventListener('click', e => closePopup(cardPopup));
@@ -90,6 +90,14 @@ function renderCard(card) {
     cardsListElement.prepend(cardElement);
 }
 
+function trashClickHandler(evt) {
+  evt.target.closest('.card').remove()
+}
+
+function likeClickHandler(evt) {
+  evt.target.classList.toggle('card__like_active');
+}
+
 function createCardElement(card) {
     const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 
@@ -102,10 +110,10 @@ function createCardElement(card) {
     cardCaptionElement.textContent = card.name;
 
     const trashElement = cardElement.querySelector('.card__trash');
-    trashElement.addEventListener('click', evt => evt.target.closest('.card').remove());
+    trashElement.addEventListener('click', trashClickHandler);
 
     const likeElement = cardElement.querySelector('.card__like');
-    likeElement.addEventListener('click', evt => evt.target.classList.toggle('card__like_active'));
+    likeElement.addEventListener('click', likeClickHandler);
 
     return cardElement;
 }
@@ -126,7 +134,7 @@ function openCardDetailsPopup(card) {
 }
 
 function openAddCardPopup() {
-    cardPopupSubmitBtnElement.reset();
+    cardPopupFormElement.reset();
 
     openPopup(cardPopup);
 }
