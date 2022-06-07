@@ -71,15 +71,22 @@ function initValidation() {
 }
 
 function renderInitialCards() {
-  initialCards.forEach(renderCard);
+  initialCards.forEach(addCard);
 }
 
-function renderCard(cardData) {
-  const openPopupFn = () => openCardDetailsPopup(cardData);
-  
-  const card = new Card(cardData, cardConstants, openPopupFn);
-  const cardElement = card.createElement();
+function addCard(cardData) {
+  const cardElement = createCardElement(cardData);
+  renderCard(cardElement);
+}
 
+function createCardElement(cardData) {
+  const openPopupFn = () => openCardDetailsPopup(cardData);
+
+  const card = new Card(cardData, cardConstants, openPopupFn);
+  return card.createElement();
+}
+
+function renderCard(cardElement) {
   cardsListElement.prepend(cardElement);
 }
 
@@ -126,7 +133,7 @@ function submitAddCard(e) {
     link: link
   };
 
-  renderCard(card)
+  addCard(card)
 
   closePopup(cardPopup);
 }
