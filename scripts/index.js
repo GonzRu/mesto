@@ -1,42 +1,52 @@
 import { Card } from "./card.js";
+import { FormValidator } from "./formValidator.js";
 
 const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
-  const cardConstants = {
-    cardListSelector: '.cards__list',
-    cardTemplateSelector: '#card-template',
-    cardSelector: '.card',
-    cardImageSelector: '.card__image',
-    cardCaptionSelector: '.card__caption',
-    cardTrashSelector: '.card__trash',
-    cardLikeSelector: '.card__like',
-    cardLikeActiveClass: 'card__like_active',
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
   }
+];
+
+const cardConstants = {
+  cardListSelector: '.cards__list',
+  cardTemplateSelector: '#card-template',
+  cardSelector: '.card',
+  cardImageSelector: '.card__image',
+  cardCaptionSelector: '.card__caption',
+  cardTrashSelector: '.card__trash',
+  cardLikeSelector: '.card__like',
+  cardLikeActiveClass: 'card__like_active',
+}
+
+const formConstants = {
+  formSelector: '.form',
+  inputSelector: '.form__textbox',
+  submitButtonSelector: '.form__save-btn',
+  inactiveButtonClass: 'form__save-btn_disabled',
+  inputErrorClass: 'form__textbox_type_error',
+  errorClass: 'form__error_visible'
+}
 
 const body = document.querySelector('body');
 
@@ -70,86 +80,98 @@ const cardDetailsPopupImageElement = cardDetailsPopup.querySelector('.card-detai
 const cardDetailsPopupDescriptionElement = cardDetailsPopup.querySelector('.card-details__description');
 
 initSubscriptions();
+initValidation();
 
 initialCards.forEach(renderCard);
 
 function initSubscriptions() {
-    profileButtonElement.addEventListener('click', openEditProfilePopup);
-    cardAddButtonElement.addEventListener('click', openAddCardPopup);
+  profileButtonElement.addEventListener('click', openEditProfilePopup);
+  cardAddButtonElement.addEventListener('click', openAddCardPopup);
 
-    profilePopupFormElement.addEventListener('submit', submitEditProfile);
-    cardPopupFormElement.addEventListener('submit', submitAddCard);
+  profilePopupFormElement.addEventListener('submit', submitEditProfile);
+  cardPopupFormElement.addEventListener('submit', submitAddCard);
 
-    profilePopupCloseBtnElement.addEventListener('click', e => closePopup(profilePopup));
-    cardPopupCloseBtnElement.addEventListener('click', e => closePopup(cardPopup));
-    cardDetailsPopupCloseBtnElement.addEventListener('click', e => closePopup(cardDetailsPopup));
+  profilePopupCloseBtnElement.addEventListener('click', e => closePopup(profilePopup));
+  cardPopupCloseBtnElement.addEventListener('click', e => closePopup(cardPopup));
+  cardDetailsPopupCloseBtnElement.addEventListener('click', e => closePopup(cardDetailsPopup));
 
-    const initPopupSubscrptions = (popupElement) => {
-      popupElement.addEventListener('mousedown', (e) => {
-        if (e.target.classList.contains('popup')) {
-          closePopup(popupElement)
-        }
-      });
-    };
-    initPopupSubscrptions(profilePopup);
-    initPopupSubscrptions(cardPopup);
-    initPopupSubscrptions(cardDetailsPopup);
+  const initPopupSubscrptions = (popupElement) => {
+    popupElement.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('popup')) {
+        closePopup(popupElement)
+      }
+    });
+  };
+  initPopupSubscrptions(profilePopup);
+  initPopupSubscrptions(cardPopup);
+  initPopupSubscrptions(cardDetailsPopup);
+}
+
+function initValidation() {
+  const formList = Array.from(document.querySelectorAll(formConstants.formSelector));
+  formList.forEach(formElement => {
+    const formValidator = new FormValidator(formConstants, formElement);
+    formElement.formValidator = formValidator;
+    formValidator.enableValidation();
+  });
 }
 
 function renderCard(cardData) {
-    const card = new Card(cardData, cardConstants);
-    const cardElement = card.createElement();
+  const card = new Card(cardData, cardConstants);
+  const cardElement = card.createElement();
 
-    const cardImageElement = cardElement.querySelector('.card__image');
-    cardImageElement.addEventListener('click', e => openCardDetailsPopup(cardData));
+  const cardImageElement = cardElement.querySelector('.card__image');
+  cardImageElement.addEventListener('click', e => openCardDetailsPopup(cardData));
 
-    cardsListElement.prepend(cardElement);
+  cardsListElement.prepend(cardElement);
 }
 
 function openEditProfilePopup() {
-    profilePopupNameElement.value = profileNameElement.textContent;
-    profilePopupDescriptionElement.value = profileDescriptionElement.textContent;
+  profilePopupNameElement.value = profileNameElement.textContent;
+  profilePopupDescriptionElement.value = profileDescriptionElement.textContent;
+  
+  profilePopupFormElement.formValidator.resetState();
 
-    openPopup(profilePopup);
+  openPopup(profilePopup);
 }
 
 function openCardDetailsPopup(cardData) {
-    cardDetailsPopupImageElement.src = cardData.link;
-    cardDetailsPopupImageElement.alt = cardData.name;
-    cardDetailsPopupDescriptionElement.textContent = cardData.name;
+  cardDetailsPopupImageElement.src = cardData.link;
+  cardDetailsPopupImageElement.alt = cardData.name;
+  cardDetailsPopupDescriptionElement.textContent = cardData.name;
 
-    openPopup(cardDetailsPopup);
+  openPopup(cardDetailsPopup);
 }
 
 function openAddCardPopup() {
-    cardPopupFormElement.reset();
-
-    openPopup(cardPopup);
+  cardPopupFormElement.reset();
+  cardPopupFormElement.formValidator.resetState();
+  openPopup(cardPopup);
 }
 
 function submitEditProfile(e) {
-    e.preventDefault();
-    
-    profileNameElement.textContent = profilePopupNameElement.value;
-    profileDescriptionElement.textContent = profilePopupDescriptionElement.value;
+  e.preventDefault();
 
-    closePopup(profilePopup);
+  profileNameElement.textContent = profilePopupNameElement.value;
+  profileDescriptionElement.textContent = profilePopupDescriptionElement.value;
+
+  closePopup(profilePopup);
 }
 
 function submitAddCard(e) {
-    e.preventDefault();
-    
-    const name = cardPopupNameElement.value;
-    const link = cardPopupLinkElement.value;
+  e.preventDefault();
 
-    const card = {
-        name: name,
-        link: link
-    };
+  const name = cardPopupNameElement.value;
+  const link = cardPopupLinkElement.value;
 
-    renderCard(card)
+  const card = {
+    name: name,
+    link: link
+  };
 
-    closePopup(cardPopup);
+  renderCard(card)
+
+  closePopup(cardPopup);
 }
 
 const keyDownHandler = (e) => {
@@ -159,16 +181,16 @@ const keyDownHandler = (e) => {
 }
 
 function openPopup(popupElement) {
-    popupElement.classList.add('popup_opened');
-    body.classList.add('page_fixed');
+  popupElement.classList.add('popup_opened');
+  body.classList.add('page_fixed');
 
-    keyDownHandler.owner = popupElement;
-    document.addEventListener('keydown', keyDownHandler);
+  keyDownHandler.owner = popupElement;
+  document.addEventListener('keydown', keyDownHandler);
 }
 
 function closePopup(popupElement) {
-    popupElement.classList.remove('popup_opened');
-    body.classList.remove('page_fixed');
+  popupElement.classList.remove('popup_opened');
+  body.classList.remove('page_fixed');
 
-    document.removeEventListener('keydown', keyDownHandler);
+  document.removeEventListener('keydown', keyDownHandler);
 }
