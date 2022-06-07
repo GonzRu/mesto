@@ -1,9 +1,10 @@
 
 export class Card {
-  constructor(data, constants) {
+  constructor(data, constants, openPopupFn) {
     this._name = data.name;
     this._link = data.link;
     this._constants = constants;
+    this._openPopupFn = openPopupFn;
   }
 
   createElement() {
@@ -36,6 +37,9 @@ export class Card {
 
     const likeElement = cardElement.querySelector(this._constants.cardLikeSelector);
     likeElement.addEventListener('click', evt => this._onLikeClick(evt));
+
+    const cardImageElement = cardElement.querySelector(this._constants.cardImageSelector);
+    cardImageElement.addEventListener('click', e => this._openPopupFn());
   }
 
 

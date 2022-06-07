@@ -75,11 +75,10 @@ function renderInitialCards() {
 }
 
 function renderCard(cardData) {
-  const card = new Card(cardData, cardConstants);
+  const openPopupFn = () => openCardDetailsPopup(cardData);
+  
+  const card = new Card(cardData, cardConstants, openPopupFn);
   const cardElement = card.createElement();
-
-  const cardImageElement = cardElement.querySelector('.card__image');
-  cardImageElement.addEventListener('click', e => openCardDetailsPopup(cardData));
 
   cardsListElement.prepend(cardElement);
 }
