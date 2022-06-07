@@ -35,8 +35,8 @@ const cardDetailsPopupDescriptionElement = cardDetailsPopup.querySelector('.card
 
 initSubscriptions();
 initValidation();
+renderInitialCards();
 
-initialCards.forEach(renderCard);
 
 function initSubscriptions() {
   profileButtonElement.addEventListener('click', openEditProfilePopup);
@@ -68,6 +68,10 @@ function initValidation() {
     formElement.formValidator = formValidator;
     formValidator.enableValidation();
   });
+}
+
+function renderInitialCards() {
+  initialCards.forEach(renderCard);
 }
 
 function renderCard(cardData) {
