@@ -1,9 +1,9 @@
-import Card from "./card.js";
-import FormValidator from "./formValidator.js";
-import Section from './section.js';
-import PopupWithImage from './popupWithImage.js';
-import PopupWithForm from './popupWithForm.js';
-import UserInfo from "./userInfo.js";
+import Card from "./Card.js";
+import FormValidator from "./FormValidator.js";
+import Section from './Section.js';
+import PopupWithImage from './PopupWithImage.js';
+import PopupWithForm from './PopupWithForm.js';
+import UserInfo from "./UserInfo.js";
 import { initialCards, formConstants, cardConstants } from "./constants.js";
 
 // Profile
