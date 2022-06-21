@@ -1,5 +1,6 @@
 import { Card } from "./card.js";
 import { FormValidator } from "./formValidator.js";
+import Section from './section.js';
 import { initialCards, formConstants, cardConstants } from "./constants.js";
 
 const body = document.querySelector('body');
@@ -32,6 +33,14 @@ const cardDetailsPopup = document.querySelector('.popup_type_card-details');
 const cardDetailsPopupCloseBtnElement = cardDetailsPopup.querySelector('.popup__close-btn');
 const cardDetailsPopupImageElement = cardDetailsPopup.querySelector('.card-details__image');
 const cardDetailsPopupDescriptionElement = cardDetailsPopup.querySelector('.card-details__description');
+
+const cardsSection = new Section({
+  items: initialCards,
+  renderer: (item) => {
+    const cardElement = createCardElement(item);
+    cardsSection.addItem(cardElement);
+  }
+}, cardConstants.cardListSelector);
 
 initSubscriptions();
 initValidation();
@@ -71,12 +80,7 @@ function initValidation() {
 }
 
 function renderInitialCards() {
-  initialCards.forEach(addCard);
-}
-
-function addCard(cardData) {
-  const cardElement = createCardElement(cardData);
-  renderCard(cardElement);
+  cardsSection.generateItems();
 }
 
 function createCardElement(cardData) {
@@ -86,14 +90,10 @@ function createCardElement(cardData) {
   return card.createElement();
 }
 
-function renderCard(cardElement) {
-  cardsListElement.prepend(cardElement);
-}
-
 function openEditProfilePopup() {
   profilePopupNameElement.value = profileNameElement.textContent;
   profilePopupDescriptionElement.value = profileDescriptionElement.textContent;
-  
+
   profilePopupFormElement.formValidator.resetState();
 
   openPopup(profilePopup);
