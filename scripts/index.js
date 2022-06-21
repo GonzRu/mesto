@@ -93,8 +93,6 @@ function submitEditProfile({name, description}) {
 }
 
 function submitAddCard(data) {
-  console.log(data);
   addCard(data)
-  cardsSection.addItem(data);
   cardPopup.close();
 }
