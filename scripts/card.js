@@ -1,5 +1,5 @@
 
-export class Card {
+export default class Card {
   constructor(data, constants, openPopupFn) {
     this._name = data.name;
     this._link = data.link;
