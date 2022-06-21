@@ -3,13 +3,12 @@ import { FormValidator } from "./formValidator.js";
 import Section from './section.js';
 import PopupWithImage from './popupWithImage.js';
 import PopupWithForm from './popupWithForm.js';
+import UserInfo from "./userInfo.js";
 import { initialCards, formConstants, cardConstants } from "./constants.js";
 
 const body = document.querySelector('body');
 
 // Profile
-const profileNameElement = document.querySelector('.profile__name');
-const profileDescriptionElement = document.querySelector('.profile__description');
 const profileButtonElement = document.querySelector('.profile__edit');
 const profilePopupNameElement = document.querySelector('#edit-profile-form-name');
 const profilePopupDescriptionElement = document.querySelector('#edit-profile-form-description');
@@ -20,6 +19,8 @@ const cardAddButtonElement = document.querySelector('.profile__add-photo');
 const cardDetailsPopup = new PopupWithImage('.popup_type_card-details');
 const cardPopup = new PopupWithForm('.popup_type_card', (evt) => submitAddCard(evt));
 const profilePopup = new PopupWithForm('.popup_type_profile', (evt) => submitEditProfile(evt));
+
+const userInfo = new UserInfo({nameSelector: '.profile__name', descriptionSelector: '.profile__description'});
 
 cardPopup.setEventListeners();
 cardDetailsPopup.setEventListeners();
@@ -70,8 +71,9 @@ function renderCard(cardElement) {
 }
 
 function openEditProfilePopup() {
-  profilePopupNameElement.value = profileNameElement.textContent;
-  profilePopupDescriptionElement.value = profileDescriptionElement.textContent;
+  const user = userInfo.getUserInfo();
+  profilePopupNameElement.value = user.name;
+  profilePopupDescriptionElement.value = user.description;
 
   // profilePopupFormElement.formValidator.resetState();
 
@@ -89,8 +91,12 @@ function openAddCardPopup() {
 function submitEditProfile(e) {
   e.preventDefault();
 
-  profileNameElement.textContent = profilePopupNameElement.value;
-  profileDescriptionElement.textContent = profilePopupDescriptionElement.value;
+  const user = {
+    name: profilePopupNameElement.value,
+    description: profilePopupDescriptionElement.value,
+  }
+  
+  userInfo.setUserInfo(user);
 
   profilePopup.close();
 }
