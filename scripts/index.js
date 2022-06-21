@@ -4,22 +4,26 @@ import Section from './Section.js';
 import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from "./UserInfo.js";
-import { initialCards, formConstants, cardConstants } from "./constants.js";
+import { initialCards, formConstants, cardConstants, selectors } from "./constants.js";
 import '../pages/index.css';
 
 // Profile
-const profileButtonElement = document.querySelector('.profile__edit');
-const profilePopupNameElement = document.querySelector('#edit-profile-form-name');
-const profilePopupDescriptionElement = document.querySelector('#edit-profile-form-description');
+const profileButtonElement = document.querySelector(selectors.profile.editButton);
+const profilePopupNameElement = document.querySelector(selectors.profile.formName);
+const profilePopupDescriptionElement = document.querySelector(selectors.profile.formDescription);
 
 // Cards
-const cardAddButtonElement = document.querySelector('.profile__add-photo');
+const cardAddButtonElement = document.querySelector(selectors.card.addButton);
 
-const cardDetailsPopup = new PopupWithImage('.popup_type_card-details');
-const cardPopup = new PopupWithForm('.popup_type_card', (evt) => submitAddCard(evt));
-const profilePopup = new PopupWithForm('.popup_type_profile', (evt) => submitEditProfile(evt));
+const cardDetailsPopup = new PopupWithImage(selectors.cardDetails.popup);
+const cardPopup = new PopupWithForm(selectors.card.popup, (evt) => submitAddCard(evt));
+const profilePopup = new PopupWithForm(selectors.profile.popup, (evt) => submitEditProfile(evt));
 
-const userInfo = new UserInfo({nameSelector: '.profile__name', descriptionSelector: '.profile__description'});
+const userInfo = new UserInfo({
+  nameSelector: selectors.profile.name,
+  descriptionSelector: selectors.profile.description
+}
+);
 
 cardPopup.setEventListeners();
 cardDetailsPopup.setEventListeners();
@@ -81,12 +85,12 @@ function openAddCardPopup() {
   cardPopup.open();
 }
 
-function submitEditProfile({name, description}) {
+function submitEditProfile({ name, description }) {
   const user = {
     name: name,
     description: description,
   }
-  
+
   userInfo.setUserInfo(user);
 
   profilePopup.close();

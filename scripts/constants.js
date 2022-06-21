@@ -25,6 +25,24 @@ export const initialCards = [
   }
 ];
 
+export const selectors = {
+  profile: {
+    popup: '.popup_type_profile',
+    formName: '#edit-profile-form-name',
+    formDescription: '#edit-profile-form-description',
+    name: '.profile__name',
+    description: '.profile__description',
+    editButton: '.profile__edit',
+  },
+  card: {
+    popup: '.popup_type_card',
+    addButton: '.profile__add-photo',
+  },
+  cardDetails: {
+    popup: '.popup_type_card-details',
+  }
+}
+
 export const cardConstants = {
   cardListSelector: '.cards__list',
   cardTemplateSelector: '#card-template',
