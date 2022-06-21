@@ -6,8 +6,6 @@ import PopupWithForm from './popupWithForm.js';
 import UserInfo from "./userInfo.js";
 import { initialCards, formConstants, cardConstants } from "./constants.js";
 
-const body = document.querySelector('body');
-
 // Profile
 const profileButtonElement = document.querySelector('.profile__edit');
 const profilePopupNameElement = document.querySelector('#edit-profile-form-name');
@@ -60,7 +58,7 @@ function addCard(cardData) {
 }
 
 function createCardElement(cardData) {
-  const openPopupFn = () => openCardDetailsPopup(cardData);
+  const openPopupFn = () => cardDetailsPopup.open(cardData);
 
   const card = new Card(cardData, cardConstants, openPopupFn);
   return card.createElement();
@@ -75,25 +73,17 @@ function openEditProfilePopup() {
   profilePopupNameElement.value = user.name;
   profilePopupDescriptionElement.value = user.description;
 
-  // profilePopupFormElement.formValidator.resetState();
-
   profilePopup.open();
-}
-
-function openCardDetailsPopup(cardData) {
-  cardDetailsPopup.open(cardData);
 }
 
 function openAddCardPopup() {
   cardPopup.open();
 }
 
-function submitEditProfile(e) {
-  e.preventDefault();
-
+function submitEditProfile({name, description}) {
   const user = {
-    name: profilePopupNameElement.value,
-    description: profilePopupDescriptionElement.value,
+    name: name,
+    description: description,
   }
   
   userInfo.setUserInfo(user);
@@ -101,18 +91,9 @@ function submitEditProfile(e) {
   profilePopup.close();
 }
 
-function submitAddCard() {
-  e.preventDefault();
-
-  const name = cardPopupNameElement.value;
-  const link = cardPopupLinkElement.value;
-
-  const card = {
-    name: name,
-    link: link
-  };
-
-  addCard(card)
-  cardsSection.addItem(card);
+function submitAddCard(data) {
+  console.log(data);
+  addCard(data)
+  cardsSection.addItem(data);
   cardPopup.close();
 }

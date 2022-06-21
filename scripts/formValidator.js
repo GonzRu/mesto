@@ -5,9 +5,9 @@ export class FormValidator {
   }
 
   enableValidation() {
-    this._formElement.addEventListener('submit', function (evt) {
-      evt.preventDefault();
-    });
+    this._formElement.addEventListener('submit', (evt) => evt.preventDefault());
+    this._formElement.addEventListener('reset', () => this._resetState());
+    this._formElement.addEventListener('open', () => this._resetState());
 
     this._inputList = this._getInputList();
     this._buttonElement = this._getButtonElement();
@@ -15,7 +15,7 @@ export class FormValidator {
     this._toggleButtonState();
   }
 
-  resetState() {
+  _resetState() {
     this._inputList.forEach((inputElement) => {
       this._hideInputError(inputElement);
     });
