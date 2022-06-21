@@ -5,6 +5,7 @@ import PopupWithImage from './PopupWithImage.js';
 import PopupWithForm from './PopupWithForm.js';
 import UserInfo from "./UserInfo.js";
 import { initialCards, formConstants, cardConstants } from "./constants.js";
+import '../pages/index.css';
 
 // Profile
 const profileButtonElement = document.querySelector('.profile__edit');
