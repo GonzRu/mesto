@@ -35,7 +35,7 @@ export const selectors = {
     description: '.profile__description',
     editButton: '.profile__edit',
   },
-  card: {
+  newCard: {
     popup: '.popup_type_card',
     form: 'add-card-form',
     addButton: '.profile__add-photo',

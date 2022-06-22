@@ -13,14 +13,14 @@ const profilePopupNameElement = document.querySelector(selectors.profile.formNam
 const profilePopupDescriptionElement = document.querySelector(selectors.profile.formDescription);
 
 // Cards
-const cardAddButtonElement = document.querySelector(selectors.card.addButton);
+const newCardButtonElement = document.querySelector(selectors.newCard.addButton);
 
 // Popups
 const cardDetailsPopup = new PopupWithImage(selectors.cardDetails.popup);
-const cardPopup = new PopupWithForm(selectors.card.popup, (evt) => submitAddCard(evt));
+const newCardPopup = new PopupWithForm(selectors.newCard.popup, (evt) => submitAddCard(evt));
 const profilePopup = new PopupWithForm(selectors.profile.popup, (evt) => submitEditProfile(evt));
 
-cardPopup.setEventListeners();
+newCardPopup.setEventListeners();
 cardDetailsPopup.setEventListeners();
 profilePopup.setEventListeners();
 
@@ -33,9 +33,9 @@ const userInfo = new UserInfo({
 
 // Validation
 const profileForm = document.forms[selectors.profile.form];
-const addCardForm = document.forms[selectors.card.form];
+const newCardForm = document.forms[selectors.newCard.form];
 const profileValidation = new FormValidator(formConstants, profileForm);
-const newCardValidation = new FormValidator(formConstants, addCardForm);
+const newCardValidation = new FormValidator(formConstants, newCardForm);
 profileValidation.enableValidation();
 newCardValidation.enableValidation(); 
 
@@ -50,7 +50,7 @@ initSubscriptions();
 
 function initSubscriptions() {
   profileButtonElement.addEventListener('click', openEditProfilePopup);
-  cardAddButtonElement.addEventListener('click', openAddCardPopup);
+  newCardButtonElement.addEventListener('click', openAddCardPopup);
 }
 
 function addCard(cardData) {
@@ -80,21 +80,15 @@ function openEditProfilePopup() {
 
 function openAddCardPopup() {
   newCardValidation.resetState();
-  cardPopup.open();
+  newCardPopup.open();
 }
 
-function submitEditProfile({ name, description }) {
-  const user = {
-    name: name,
-    description: description,
-  }
-
-  userInfo.setUserInfo(user);
-
+function submitEditProfile(data) {
+  userInfo.setUserInfo(data);
   profilePopup.close();
 }
 
 function submitAddCard(data) {
   addCard(data)
-  cardPopup.close();
+  newCardPopup.close();
 }
