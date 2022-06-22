@@ -5,13 +5,15 @@ export default class Card {
     this._link = data.link;
     this._constants = constants;
     this._openPopupFn = openPopupFn;
+
+    this._cardElement = this._getCardElement();
+    this._likeElement = this._cardElement.querySelector(this._constants.cardLikeSelector);
   }
 
   createElement() {
-    const cardElement = this._getCardElement();
-    this._setEventListeners(cardElement);
+    this._setEventListeners(this._cardElement);
 
-    return cardElement;
+    return this._cardElement;
   }
 
   _getCardElement() {
@@ -35,19 +37,18 @@ export default class Card {
     const trashElement = cardElement.querySelector(this._constants.cardTrashSelector);
     trashElement.addEventListener('click', evt => this._onTrashClick(evt));
 
-    const likeElement = cardElement.querySelector(this._constants.cardLikeSelector);
-    likeElement.addEventListener('click', evt => this._onLikeClick(evt));
+    this._likeElement.addEventListener('click', evt => this._onLikeClick(evt));
 
     const cardImageElement = cardElement.querySelector(this._constants.cardImageSelector);
     cardImageElement.addEventListener('click', e => this._openPopupFn());
   }
 
 
-  _onTrashClick(evt) {
-    evt.target.closest(this._constants.cardSelector).remove()
+  _onTrashClick() {
+    this._cardElement.remove();
   }
 
-  _onLikeClick(evt) {
-    evt.target.classList.toggle(this._constants.cardLikeActiveClass);
+  _onLikeClick() {
+    this._likeElement.classList.toggle(this._constants.cardLikeActiveClass);
   }
 }

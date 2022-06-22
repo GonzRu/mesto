@@ -28,6 +28,7 @@ export const initialCards = [
 export const selectors = {
   profile: {
     popup: '.popup_type_profile',
+    form: 'edit-profile-form',
     formName: '#edit-profile-form-name',
     formDescription: '#edit-profile-form-description',
     name: '.profile__name',
@@ -36,6 +37,7 @@ export const selectors = {
   },
   card: {
     popup: '.popup_type_card',
+    form: 'add-card-form',
     addButton: '.profile__add-photo',
   },
   cardDetails: {

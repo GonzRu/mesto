@@ -15,46 +15,42 @@ const profilePopupDescriptionElement = document.querySelector(selectors.profile.
 // Cards
 const cardAddButtonElement = document.querySelector(selectors.card.addButton);
 
+// Popups
 const cardDetailsPopup = new PopupWithImage(selectors.cardDetails.popup);
 const cardPopup = new PopupWithForm(selectors.card.popup, (evt) => submitAddCard(evt));
 const profilePopup = new PopupWithForm(selectors.profile.popup, (evt) => submitEditProfile(evt));
 
+cardPopup.setEventListeners();
+cardDetailsPopup.setEventListeners();
+profilePopup.setEventListeners();
+
+// UserInfo
 const userInfo = new UserInfo({
   nameSelector: selectors.profile.name,
   descriptionSelector: selectors.profile.description
 }
 );
 
-cardPopup.setEventListeners();
-cardDetailsPopup.setEventListeners();
-profilePopup.setEventListeners();
+// Validation
+const profileForm = document.forms[selectors.profile.form];
+const addCardForm = document.forms[selectors.card.form];
+const profileValidation = new FormValidator(formConstants, profileForm);
+const newCardValidation = new FormValidator(formConstants, addCardForm);
+profileValidation.enableValidation();
+newCardValidation.enableValidation(); 
 
+// Section
 const cardsSection = new Section({
   items: initialCards,
   renderer: (item) => addCard(item)
 }, cardConstants.cardListSelector);
+cardsSection.generateItems();
 
 initSubscriptions();
-initValidation();
-renderInitialCards();
-
 
 function initSubscriptions() {
   profileButtonElement.addEventListener('click', openEditProfilePopup);
   cardAddButtonElement.addEventListener('click', openAddCardPopup);
-}
-
-function initValidation() {
-  const formList = Array.from(document.querySelectorAll(formConstants.formSelector));
-  formList.forEach(formElement => {
-    const formValidator = new FormValidator(formConstants, formElement);
-    formElement.formValidator = formValidator;
-    formValidator.enableValidation();
-  });
-}
-
-function renderInitialCards() {
-  cardsSection.generateItems();
 }
 
 function addCard(cardData) {
@@ -78,10 +74,12 @@ function openEditProfilePopup() {
   profilePopupNameElement.value = user.name;
   profilePopupDescriptionElement.value = user.description;
 
+  profileValidation.resetState();
   profilePopup.open();
 }
 
 function openAddCardPopup() {
+  newCardValidation.resetState();
   cardPopup.open();
 }
 
