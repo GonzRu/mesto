@@ -5,9 +5,6 @@ export default class FormValidator {
   }
 
   enableValidation() {
-    this._formElement.addEventListener('submit', (evt) => evt.preventDefault());
-    this._formElement.addEventListener('reset', () => this.resetState());
-
     this._inputList = this._getInputList();
     this._buttonElement = this._getButtonElement();
     this._setEventListeners();
