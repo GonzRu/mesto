@@ -4,7 +4,8 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from "../components/UserInfo.js";
-import { initialCards, formConstants, cardConstants, selectors } from "../utils/constants.js";
+import {initialCards, formConstants, cardConstants, selectors} from "../utils/constants.js";
+import api from '../utils/Api.js';
 import '../pages/index.css';
 
 // Profile
@@ -26,9 +27,10 @@ profilePopup.setEventListeners();
 
 // UserInfo
 const userInfo = new UserInfo({
-  nameSelector: selectors.profile.name,
-  descriptionSelector: selectors.profile.description
-}
+        nameSelector: selectors.profile.name,
+        descriptionSelector: selectors.profile.description,
+        avatarSelector: selectors.profile.avatar,
+    }
 );
 
 // Validation
@@ -37,58 +39,62 @@ const newCardForm = document.forms[selectors.newCard.form];
 const profileValidation = new FormValidator(formConstants, profileForm);
 const newCardValidation = new FormValidator(formConstants, newCardForm);
 profileValidation.enableValidation();
-newCardValidation.enableValidation(); 
+newCardValidation.enableValidation();
 
 // Section
 const cardsSection = new Section({
-  items: initialCards,
-  renderer: (item) => addCard(item)
+    items: initialCards,
+    renderer: (item) => addCard(item)
 }, cardConstants.cardListSelector);
 cardsSection.generateItems();
 
 initSubscriptions();
 
 function initSubscriptions() {
-  profileButtonElement.addEventListener('click', openEditProfilePopup);
-  newCardButtonElement.addEventListener('click', openAddCardPopup);
+    profileButtonElement.addEventListener('click', openEditProfilePopup);
+    newCardButtonElement.addEventListener('click', openAddCardPopup);
 }
 
 function addCard(cardData) {
-  const cardElement = createCardElement(cardData);
-  renderCard(cardElement);
+    const cardElement = createCardElement(cardData);
+    renderCard(cardElement);
 }
 
 function createCardElement(cardData) {
-  const openPopupFn = () => cardDetailsPopup.open(cardData);
+    const openPopupFn = () => cardDetailsPopup.open(cardData);
 
-  const card = new Card(cardData, cardConstants, openPopupFn);
-  return card.createElement();
+    const card = new Card(cardData, cardConstants, openPopupFn);
+    return card.createElement();
 }
 
 function renderCard(cardElement) {
-  cardsSection.addItem(cardElement);
+    cardsSection.addItem(cardElement);
 }
 
 function openEditProfilePopup() {
-  const user = userInfo.getUserInfo();
-  profilePopupNameElement.value = user.name;
-  profilePopupDescriptionElement.value = user.description;
+    const user = userInfo.getUserInfo();
+    profilePopupNameElement.value = user.name;
+    profilePopupDescriptionElement.value = user.description;
 
-  profileValidation.resetState();
-  profilePopup.open();
+    profileValidation.resetState();
+    profilePopup.open();
 }
 
 function openAddCardPopup() {
-  newCardValidation.resetState();
-  newCardPopup.open();
+    newCardValidation.resetState();
+    newCardPopup.open();
 }
 
 function submitEditProfile(data) {
-  userInfo.setUserInfo(data);
-  profilePopup.close();
+    userInfo.setUserInfo(data);
+    profilePopup.close();
 }
 
 function submitAddCard(data) {
-  addCard(data)
-  newCardPopup.close();
+    addCard(data)
+    newCardPopup.close();
 }
+
+api.getMyUser()
+    .then(user => userInfo.setUserInfo(user))
+    .catch(err => console.log(err));

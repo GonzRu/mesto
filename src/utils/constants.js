@@ -33,6 +33,7 @@ export const selectors = {
     formDescription: '#edit-profile-form-description',
     name: '.profile__name',
     description: '.profile__description',
+    avatar: '.profile__avatar',
     editButton: '.profile__edit',
   },
   newCard: {
