@@ -54,26 +54,28 @@ function initSubscriptions() {
 }
 
 function addCard(cardData) {
-    const cardElement = createCardElement(cardData, userInfo.getUserInfo().id);
+    const cardElement = createCardElement(cardData, userInfo.getUserId());
     renderCard(cardElement);
 }
 
 function createCardElement(cardData, userId) {
-    const openPopupFn = () => cardDetailsPopup.open(cardData);
-    const removeFn = (card) => {
-        removeCardPopup.cardId = cardData._id;
-        removeCardPopup.card = card;
-        removeCardPopup.open();
-    };
-    const likeFn = (like) => {
-        const promise = like ? api.likeCard(cardData._id) : api.unlikeCard(cardData._id);
-        
-        promise
-        .then(c => card.update(c))
-        .catch(err => console.log(err));
+    const callbacks = {
+        openFn: () => cardDetailsPopup.open(cardData),
+        removeFn: (card) => {
+            removeCardPopup.cardId = cardData._id;
+            removeCardPopup.card = card;
+            removeCardPopup.open();
+        },
+        likeFn: (like) => {
+            const promise = like ? api.likeCard(cardData._id) : api.unlikeCard(cardData._id);
+            
+            promise
+            .then(c => card.update(c))
+            .catch(err => console.log(err));
+        }
     };
 
-    const card = new Card(cardData, cardConstants, openPopupFn, userId, removeFn, likeFn);
+    const card = new Card(cardData, cardConstants, userId, callbacks);
     return card.createElement();
 }
 
@@ -114,7 +116,6 @@ function submitAddCard(data) {
 function submitRemoveCard() {
     const card = removeCardPopup.card;
     const cardId = removeCardPopup.cardId;
-    console.log(removeCardPopup);
 
     api.removeCard(cardId)
         .then(() => {
@@ -134,6 +135,7 @@ Promise.all([api.getMyUser(), api.getInitialCards()])
         }, cardConstants.cardListSelector);
 
         userInfo.setUserInfo(user);
-        cardsSection.generateItems();
+
+        cards.reverse().forEach(card => addCard(card));
     })
     .catch(err => console.log(err));

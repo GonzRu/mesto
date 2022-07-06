@@ -1,12 +1,13 @@
 
 export default class Card {
-  constructor(data, constants, openPopupFn, userId, removeFn, likeFn) {
+  constructor(data, constants, userId, {openFn, removeFn, likeFn}) {
     this._name = data.name;
     this._link = data.link;
     this._ownerId = data.owner._id;
     this._constants = constants;
-    this._openPopupFn = openPopupFn;
     this._userId = userId;
+
+    this._openPopupFn = openFn;
     this._removeFn = removeFn;
     this._likeFn = likeFn;
 
@@ -33,7 +34,6 @@ export default class Card {
     this._likesCountElement.innerText = data.likes.length;
 
     const like = data.likes.some(l => l._id == this._userId);
-    console.log(like);
     this._updateLikeState(like);
   }
 
