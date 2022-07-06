@@ -10,6 +10,18 @@ class Api {
             .then(this._processResponse);
     }
 
+    updateMyUser({name, about}) {
+        return fetch(this._baseUrl + 'users/me', {
+            method: 'PATCH',
+            headers: this._headers,
+            body: JSON.stringify({
+                name: name,
+                about: about
+              })
+        })
+            .then(this._processResponse);
+    }
+
     getInitialCards() {
         return fetch(this._baseUrl + 'cards', {headers: this._headers})
             .then(this._processResponse);

@@ -97,9 +97,13 @@ function openAddCardPopup() {
     newCardPopup.open();
 }
 
-function submitEditProfile(data) {
-    userInfo.setUserInfo(data);
-    profilePopup.close();
+function submitEditProfile({name, description}) {
+    api.updateMyUser({name: name, about: description})
+    .then(user => {
+        userInfo.setUserInfo(user);
+        profilePopup.close();
+    })
+    .catch(err => console.log(err));
 }
 
 function submitAddCard(data) {
