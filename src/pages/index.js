@@ -19,10 +19,12 @@ const newCardButtonElement = document.querySelector(selectors.newCard.addButton)
 // Popups
 const cardDetailsPopup = new PopupWithImage(selectors.cardDetails.popup);
 const newCardPopup = new PopupWithForm(selectors.newCard.popup, (evt) => submitAddCard(evt));
+const removeCardPopup = new PopupWithForm(selectors.removeCard.popup, (evt) => submitRemoveCard(evt));
 const profilePopup = new PopupWithForm(selectors.profile.popup, (evt) => submitEditProfile(evt));
 
 newCardPopup.setEventListeners();
 cardDetailsPopup.setEventListeners();
+removeCardPopup.setEventListeners();
 profilePopup.setEventListeners();
 
 // UserInfo
@@ -51,15 +53,20 @@ function initSubscriptions() {
     newCardButtonElement.addEventListener('click', openAddCardPopup);
 }
 
-function addCard(cardData, userId) {
-    const cardElement = createCardElement(cardData, userId);
+function addCard(cardData) {
+    const cardElement = createCardElement(cardData, userInfo.getUserInfo().id);
     renderCard(cardElement);
 }
 
 function createCardElement(cardData, userId) {
     const openPopupFn = () => cardDetailsPopup.open(cardData);
+    const removeFn = (card) => {
+        removeCardPopup.cardId = cardData._id;
+        removeCardPopup.card = card;
+        removeCardPopup.open();
+    }
 
-    const card = new Card(cardData, cardConstants, openPopupFn, userId);
+    const card = new Card(cardData, cardConstants, openPopupFn, userId, removeFn);
     return card.createElement();
 }
 
@@ -87,8 +94,27 @@ function submitEditProfile(data) {
 }
 
 function submitAddCard(data) {
-    addCard(data)
-    newCardPopup.close();
+    newCardPopup.setLoading(true);
+    api.createCard(data)
+        .then(card => {
+            addCard(card);
+            newCardPopup.close();
+        })
+        .catch(err => console.log(err))
+        .finally(() => newCardPopup.setLoading(false));
+}
+
+function submitRemoveCard() {
+    const card = removeCardPopup.card;
+    const cardId = removeCardPopup.cardId;
+    console.log(removeCardPopup);
+
+    api.removeCard(cardId)
+        .then(() => {
+            removeCardPopup.close();
+            card.remove();
+        })
+        .catch(err => console.log(err));
 }
 
 Promise.all([api.getMyUser(), api.getInitialCards()])
@@ -97,7 +123,7 @@ Promise.all([api.getMyUser(), api.getInitialCards()])
 
         cardsSection = new Section({
             items: cards,
-            renderer: (item) => addCard(item, user._id)
+            renderer: (item) => addCard(item)
         }, cardConstants.cardListSelector);
 
         userInfo.setUserInfo(user);

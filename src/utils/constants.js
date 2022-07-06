@@ -16,6 +16,9 @@ export const selectors = {
   },
   cardDetails: {
     popup: '.popup_type_card-details',
+  },
+  removeCard: {
+    popup: '.popup_type_card-remove'
   }
 }
 
@@ -27,6 +30,7 @@ export const cardConstants = {
   cardCaptionSelector: '.card__caption',
   cardTrashSelector: '.card__trash',
   cardLikeSelector: '.card__like',
+  cardLikesCountSelector: '.card__like-count',
   cardLikeActiveClass: 'card__like_active',
 }
 

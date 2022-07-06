@@ -1,15 +1,17 @@
 
 export default class Card {
-  constructor(data, constants, openPopupFn, userId) {
+  constructor(data, constants, openPopupFn, userId, removeFn) {
     this._name = data.name;
     this._link = data.link;
     this._ownerId = data.owner._id;
     this._constants = constants;
     this._openPopupFn = openPopupFn;
     this._userId = userId;
+    this._removeFn = removeFn;
 
     this._cardElement = this._getCardElement();
     this._likeElement = this._cardElement.querySelector(this._constants.cardLikeSelector);
+    this._likesCountElement = this._cardElement.querySelector(this._constants.cardLikesCountSelector);
     this._trashElement = this._cardElement.querySelector(this._constants.cardTrashSelector);
 
     if (this._ownerId !== this._userId) {
@@ -22,6 +24,10 @@ export default class Card {
     this._setEventListeners(this._cardElement);
 
     return this._cardElement;
+  }
+
+  remove() {
+    this._cardElement.remove();
   }
 
   _getCardElement() {
@@ -37,6 +43,8 @@ export default class Card {
 
     const cardCaptionElement = cardElement.querySelector(this._constants.cardCaptionSelector);
     cardCaptionElement.textContent = this._name;
+
+    this._likesCountElement.innerText = 
 
     return cardElement;
   }
@@ -54,7 +62,7 @@ export default class Card {
 
 
   _onTrashClick() {
-    this._cardElement.remove();
+    this._removeFn(this);
   }
 
   _onLikeClick() {

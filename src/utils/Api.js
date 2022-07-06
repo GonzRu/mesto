@@ -15,6 +15,21 @@ class Api {
             .then(this._processResponse);
     }
 
+    createCard(card) {
+        return fetch(this._baseUrl + 'cards', {
+            method: 'POST',
+            headers: this._headers,
+            body: JSON.stringify(card)
+        }).then(this._processResponse);
+    }
+
+    removeCard(cardId) {
+        return fetch(this._baseUrl + 'cards/' + cardId, {
+            method: 'DELETE',
+            headers: this._headers
+        }).then(this._processResponse);
+    }
+
     _processResponse(response) {
         if (response.ok) {
             return response.json();
