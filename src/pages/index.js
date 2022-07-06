@@ -64,9 +64,16 @@ function createCardElement(cardData, userId) {
         removeCardPopup.cardId = cardData._id;
         removeCardPopup.card = card;
         removeCardPopup.open();
-    }
+    };
+    const likeFn = (like) => {
+        const promise = like ? api.likeCard(cardData._id) : api.unlikeCard(cardData._id);
+        
+        promise
+        .then(c => card.update(c))
+        .catch(err => console.log(err));
+    };
 
-    const card = new Card(cardData, cardConstants, openPopupFn, userId, removeFn);
+    const card = new Card(cardData, cardConstants, openPopupFn, userId, removeFn, likeFn);
     return card.createElement();
 }
 
