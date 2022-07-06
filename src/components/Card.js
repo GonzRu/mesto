@@ -1,13 +1,21 @@
 
 export default class Card {
-  constructor(data, constants, openPopupFn) {
+  constructor(data, constants, openPopupFn, userId) {
     this._name = data.name;
     this._link = data.link;
+    this._ownerId = data.owner._id;
     this._constants = constants;
     this._openPopupFn = openPopupFn;
+    this._userId = userId;
 
     this._cardElement = this._getCardElement();
     this._likeElement = this._cardElement.querySelector(this._constants.cardLikeSelector);
+    this._trashElement = this._cardElement.querySelector(this._constants.cardTrashSelector);
+
+    if (this._ownerId !== this._userId) {
+      this._trashElement.remove();
+      this._trashElement = null;
+    }
   }
 
   createElement() {
@@ -34,8 +42,9 @@ export default class Card {
   }
 
   _setEventListeners(cardElement) {
-    const trashElement = cardElement.querySelector(this._constants.cardTrashSelector);
-    trashElement.addEventListener('click', evt => this._onTrashClick(evt));
+    if (this._trashElement) {
+      this._trashElement.addEventListener('click', evt => this._onTrashClick(evt));
+    }
 
     this._likeElement.addEventListener('click', evt => this._onLikeClick(evt));
 

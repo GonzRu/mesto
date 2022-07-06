@@ -4,7 +4,7 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from "../components/UserInfo.js";
-import {initialCards, formConstants, cardConstants, selectors} from "../utils/constants.js";
+import {formConstants, cardConstants, selectors} from "../utils/constants.js";
 import api from '../utils/Api.js';
 import '../pages/index.css';
 
@@ -42,11 +42,7 @@ profileValidation.enableValidation();
 newCardValidation.enableValidation();
 
 // Section
-const cardsSection = new Section({
-    items: initialCards,
-    renderer: (item) => addCard(item)
-}, cardConstants.cardListSelector);
-cardsSection.generateItems();
+let cardsSection = null;
 
 initSubscriptions();
 
@@ -55,15 +51,15 @@ function initSubscriptions() {
     newCardButtonElement.addEventListener('click', openAddCardPopup);
 }
 
-function addCard(cardData) {
-    const cardElement = createCardElement(cardData);
+function addCard(cardData, userId) {
+    const cardElement = createCardElement(cardData, userId);
     renderCard(cardElement);
 }
 
-function createCardElement(cardData) {
+function createCardElement(cardData, userId) {
     const openPopupFn = () => cardDetailsPopup.open(cardData);
 
-    const card = new Card(cardData, cardConstants, openPopupFn);
+    const card = new Card(cardData, cardConstants, openPopupFn, userId);
     return card.createElement();
 }
 
@@ -95,6 +91,16 @@ function submitAddCard(data) {
     newCardPopup.close();
 }
 
-api.getMyUser()
-    .then(user => userInfo.setUserInfo(user))
+Promise.all([api.getMyUser(), api.getInitialCards()])
+    .then(res => {
+        const [user, cards] = res;
+
+        cardsSection = new Section({
+            items: cards,
+            renderer: (item) => addCard(item, user._id)
+        }, cardConstants.cardListSelector);
+
+        userInfo.setUserInfo(user);
+        cardsSection.generateItems();
+    })
     .catch(err => console.log(err));
