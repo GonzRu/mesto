@@ -4,23 +4,25 @@ import Section from '../components/Section.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import UserInfo from "../components/UserInfo.js";
-import {formConstants, cardConstants, selectors} from "../utils/constants.js";
-import api from '../utils/Api.js';
+import {formConstants, cardConstants, selectors, profileButtonElement,
+    profilePopupNameElement, profilePopupDescriptionElement,
+    editAvatarButtonElement, newCardButtonElement} from "../utils/constants.js";
+import { Api } from '../utils/Api.js';
 import '../pages/index.css';
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
-// Profile
-const profileButtonElement = document.querySelector(selectors.profile.editButton);
-const profilePopupNameElement = document.querySelector(selectors.profile.formName);
-const profilePopupDescriptionElement = document.querySelector(selectors.profile.formDescription);
-const editAvatarButtonElement = document.querySelector(selectors.profile.editAvatarButton);
-
-// Cards
-const newCardButtonElement = document.querySelector(selectors.newCard.addButton);
+const api = new Api({
+    baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-45/',
+    headers: {
+        authorization: '9e108d88-c2fd-47e7-9a58-31060be64a40',
+        'Content-Type': 'application/json'
+    }
+});
 
 // Popups
 const cardDetailsPopup = new PopupWithImage(selectors.cardDetails.popup);
 const newCardPopup = new PopupWithForm(selectors.newCard.popup, (evt) => submitAddCard(evt));
-const removeCardPopup = new PopupWithForm(selectors.removeCard.popup, (evt) => submitRemoveCard(evt));
+const removeCardPopup = new PopupWithConfirmation(selectors.removeCard.popup, (evt) => submitRemoveCard(evt));
 const profilePopup = new PopupWithForm(selectors.profile.popup, (evt) => submitEditProfile(evt));
 const editAvatarPopup = new PopupWithForm(selectors.editAvatar.popup, (evt) => submitEditAvatar(evt));
 
@@ -84,9 +86,7 @@ function createCardElement(cardData, userId) {
     const callbacks = {
         openFn: () => cardDetailsPopup.open(cardData),
         removeFn: (card) => {
-            removeCardPopup.cardId = cardData._id;
-            removeCardPopup.card = card;
-            removeCardPopup.open();
+            removeCardPopup.open(card, cardData._id);
         },
         likeFn: (like) => {
             const promise = like ? api.likeCard(cardData._id) : api.unlikeCard(cardData._id);
@@ -134,10 +134,7 @@ function submitAddCard(data) {
         .finally(() => newCardPopup.setLoading(false));
 }
 
-function submitRemoveCard() {
-    const card = removeCardPopup.card;
-    const cardId = removeCardPopup.cardId;
-
+function submitRemoveCard({card, cardId}) {
     api.removeCard(cardId)
         .then(() => {
             removeCardPopup.close();
@@ -151,7 +148,6 @@ Promise.all([api.getMyUser(), api.getInitialCards()])
         const [user, cards] = res;
 
         cardsSection = new Section({
-            items: cards,
             renderer: (item) => addCard(item)
         }, cardConstants.cardListSelector);
 

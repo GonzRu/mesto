@@ -22,7 +22,7 @@ export const selectors = {
     popup: '.popup_type_card-remove'
   },
   editAvatar: {
-    form: 'remove-card-form',
+    form: 'edit-avatar-form',
     popup: '.popup_type_edit-avatar'
   }
 }
@@ -47,3 +47,12 @@ export const formConstants = {
   inputErrorClass: 'form__textbox_type_error',
   errorClass: 'form__error_visible'
 }
+
+// Profile
+export const profileButtonElement = document.querySelector(selectors.profile.editButton);
+export const profilePopupNameElement = document.querySelector(selectors.profile.formName);
+export const profilePopupDescriptionElement = document.querySelector(selectors.profile.formDescription);
+export const editAvatarButtonElement = document.querySelector(selectors.profile.editAvatarButton);
+
+// Cards
+export const newCardButtonElement = document.querySelector(selectors.newCard.addButton);

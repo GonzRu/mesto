@@ -83,7 +83,6 @@ export default class Card {
   }
 
   _onLikeClick() {
-    this._updateLikeState(!this._like);
-    this._likeFn(this._like);
+    this._likeFn(!this._like);
   }
 }
