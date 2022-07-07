@@ -55,8 +55,19 @@ let cardsSection = null;
 initSubscriptions();
 
 function initSubscriptions() {
-    profileButtonElement.addEventListener('click', openEditProfilePopup);
-    newCardButtonElement.addEventListener('click', openAddCardPopup);
+    profileButtonElement.addEventListener('click', () => {
+        const user = userInfo.getUserInfo();
+        profilePopupNameElement.value = user.name;
+        profilePopupDescriptionElement.value = user.description;
+    
+        profileValidation.resetState();
+        profilePopup.open();
+    });
+    
+    newCardButtonElement.addEventListener('click', () => {
+        newCardValidation.resetState();
+        newCardPopup.open();
+    });
 
     editAvatarButtonElement.addEventListener('click', () => {
         editAvatarValidation.resetState();
@@ -92,20 +103,6 @@ function createCardElement(cardData, userId) {
 
 function renderCard(cardElement) {
     cardsSection.addItem(cardElement);
-}
-
-function openEditProfilePopup() {
-    const user = userInfo.getUserInfo();
-    profilePopupNameElement.value = user.name;
-    profilePopupDescriptionElement.value = user.description;
-
-    profileValidation.resetState();
-    profilePopup.open();
-}
-
-function openAddCardPopup() {
-    newCardValidation.resetState();
-    newCardPopup.open();
 }
 
 function submitEditProfile({name, description}) {

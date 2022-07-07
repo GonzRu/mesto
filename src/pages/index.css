@@ -41,7 +41,6 @@
 @import url(../blocks/form/__textbox/form__textbox.css);
 @import url(../blocks/form/__error/form__error.css);
 @import url(../blocks/form/__error/_visible/form__error_visible.css);
-@import url(../blocks/form/_type/from_type_remove-card.css);
 
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
