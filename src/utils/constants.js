@@ -8,6 +8,7 @@ export const selectors = {
     description: '.profile__description',
     avatar: '.profile__avatar',
     editButton: '.profile__edit',
+    editAvatarButton: '.profile__avatar-btn',
   },
   newCard: {
     popup: '.popup_type_card',
@@ -19,6 +20,10 @@ export const selectors = {
   },
   removeCard: {
     popup: '.popup_type_card-remove'
+  },
+  editAvatar: {
+    form: 'remove-card-form',
+    popup: '.popup_type_edit-avatar'
   }
 }
 

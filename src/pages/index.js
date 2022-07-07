@@ -12,6 +12,7 @@ import '../pages/index.css';
 const profileButtonElement = document.querySelector(selectors.profile.editButton);
 const profilePopupNameElement = document.querySelector(selectors.profile.formName);
 const profilePopupDescriptionElement = document.querySelector(selectors.profile.formDescription);
+const editAvatarButtonElement = document.querySelector(selectors.profile.editAvatarButton);
 
 // Cards
 const newCardButtonElement = document.querySelector(selectors.newCard.addButton);
@@ -21,11 +22,13 @@ const cardDetailsPopup = new PopupWithImage(selectors.cardDetails.popup);
 const newCardPopup = new PopupWithForm(selectors.newCard.popup, (evt) => submitAddCard(evt));
 const removeCardPopup = new PopupWithForm(selectors.removeCard.popup, (evt) => submitRemoveCard(evt));
 const profilePopup = new PopupWithForm(selectors.profile.popup, (evt) => submitEditProfile(evt));
+const editAvatarPopup = new PopupWithForm(selectors.editAvatar.popup, (evt) => submitEditAvatar(evt));
 
 newCardPopup.setEventListeners();
 cardDetailsPopup.setEventListeners();
 removeCardPopup.setEventListeners();
 profilePopup.setEventListeners();
+editAvatarPopup.setEventListeners();
 
 // UserInfo
 const userInfo = new UserInfo({
@@ -38,10 +41,13 @@ const userInfo = new UserInfo({
 // Validation
 const profileForm = document.forms[selectors.profile.form];
 const newCardForm = document.forms[selectors.newCard.form];
+const editAvatarForm = document.forms[selectors.editAvatar.form];
 const profileValidation = new FormValidator(formConstants, profileForm);
 const newCardValidation = new FormValidator(formConstants, newCardForm);
+const editAvatarValidation = new FormValidator(formConstants, editAvatarForm);
 profileValidation.enableValidation();
 newCardValidation.enableValidation();
+editAvatarValidation.enableValidation();
 
 // Section
 let cardsSection = null;
@@ -51,6 +57,11 @@ initSubscriptions();
 function initSubscriptions() {
     profileButtonElement.addEventListener('click', openEditProfilePopup);
     newCardButtonElement.addEventListener('click', openAddCardPopup);
+
+    editAvatarButtonElement.addEventListener('click', () => {
+        editAvatarValidation.resetState();
+        editAvatarPopup.open();
+    });
 }
 
 function addCard(cardData) {
@@ -102,6 +113,15 @@ function submitEditProfile({name, description}) {
     .then(user => {
         userInfo.setUserInfo(user);
         profilePopup.close();
+    })
+    .catch(err => console.log(err));
+}
+
+function submitEditAvatar({link}) {
+    api.updateAvatar({avatar: link})
+    .then(user => {
+        userInfo.setUserInfo(user);
+        editAvatarPopup.close();
     })
     .catch(err => console.log(err));
 }
