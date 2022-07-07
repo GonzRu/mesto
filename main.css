@@ -27,7 +27,7 @@
 
 .footer__copyright{color:#545454;font-size:18px;font-weight:400;line-height:22px;margin:0;padding:0}@media screen and (max-width:425px){.footer__copyright{font-size:14px;line-height:17px}}
 .form{background-color:#fff;border-radius:10px;box-sizing:border-box;display:flex;flex-direction:column;padding:34px 36px 37px;width:430px}@media screen and (max-width:600px){.form{padding:25px 22px}}@media screen and (max-width:468px){.form{width:calc(100vw - 38px)}}
-.form__field{display:flex;flex-direction:column;gap:5px;margin-top:30px;position:relative}
+.form__field{display:flex;flex-direction:column;gap:5px;margin-top:33px;position:relative}
 .form__save-btn{background-color:#000;background:#000;border:none;border-radius:2px;color:#fff;font-size:18px;font-weight:400;height:50px;line-height:22px;margin:48px 0 0;padding:0;text-align:center}@media screen and (max-width:600px){.form__save-btn{font-size:14px;height:46px;line-height:17px}}.form__save-btn:hover{opacity:.8}
 .form__save-btn_disabled{background-color:#e5e5e5;border:1px solid #000}
 .form__header{color:#000;font-size:24px;font-weight:900;line-height:29px;margin:0 0 14px;padding:0}@media screen and (max-width:600px){.form__header{font-size:18px;line-height:22px;margin-bottom:45px}}
