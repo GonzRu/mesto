@@ -22,7 +22,7 @@ const api = new Api({
 // Popups
 const cardDetailsPopup = new PopupWithImage(selectors.cardDetails.popup);
 const newCardPopup = new PopupWithForm(selectors.newCard.popup, (evt) => submitAddCard(evt));
-const removeCardPopup = new PopupWithConfirmation(selectors.removeCard.popup, (evt) => submitRemoveCard(evt));
+const removeCardPopup = new PopupWithConfirmation(selectors.removeCard.popup);
 const profilePopup = new PopupWithForm(selectors.profile.popup, (evt) => submitEditProfile(evt));
 const editAvatarPopup = new PopupWithForm(selectors.editAvatar.popup, (evt) => submitEditAvatar(evt));
 
@@ -83,10 +83,20 @@ function addCard(cardData) {
 }
 
 function createCardElement(cardData, userId) {
+    const cardId = cardData._id;
+
     const callbacks = {
         openFn: () => cardDetailsPopup.open(cardData),
-        removeFn: (card) => {
-            removeCardPopup.open(card, cardData._id);
+        removeFn: () => {
+            removeCardPopup.setSubmitCallback(() => {
+                api.removeCard(cardId)
+                .then(() => {
+                    card.remove();
+                    removeCardPopup.close();
+                })
+                .catch(err => console.log(err));
+            });
+            removeCardPopup.open();
         },
         likeFn: (like) => {
             const promise = like ? api.likeCard(cardData._id) : api.unlikeCard(cardData._id);
@@ -132,15 +142,6 @@ function submitAddCard(data) {
         })
         .catch(err => console.log(err))
         .finally(() => newCardPopup.setLoading(false));
-}
-
-function submitRemoveCard({card, cardId}) {
-    api.removeCard(cardId)
-        .then(() => {
-            removeCardPopup.close();
-            card.remove();
-        })
-        .catch(err => console.log(err));
 }
 
 Promise.all([api.getMyUser(), api.getInitialCards()])
